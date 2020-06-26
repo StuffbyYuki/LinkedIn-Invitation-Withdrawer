@@ -42,6 +42,9 @@ def click_to_flip_page(driver, key, find_element_by):
         elif find_element_by == 'class_name':
             button = driver.find_element_by_class_name(key)
             button.click()
+        elif find_element_by == 'text':
+            button = driver.find_element_by_link_text(key)
+            button.click()
         time.sleep(3)
     except Exception as e:
         print(f'\nError! {e}\n')
@@ -65,6 +68,20 @@ def main():
 
     #Go to the network page
     click_to_flip_page(driver, 'mynetwork-nav-item', find_element_by='id') 
+
+    #Go to the invitation manage page
+    click_to_flip_page(driver, 'mn-invitations-preview__manage-all.artdeco-button.artdeco-button--tertiary.artdeco-button--muted.artdeco-button--2.ember-view', find_element_by='class_name') 
+
+    #Go to the "Sent" section
+    click_to_flip_page(driver, 'Sent', find_element_by='text') 
+    
+    #Maye scroll pages to the last page
+
+    #If I sent the invitation a long time ago, I will click the withdraw bottun. 
+    #As you go through the list of people in opposite order, check the time (i.e. 1 week ago), and say if they are too new, we don't withdraw 
+    #And that means we reached the point where we don't have anyone too old who I sent the invitation to.
+
+    #Hopefully implement a func that sends an email that says the number of people I withdrew my invite or error occured.
 
 
     #Quit the session
