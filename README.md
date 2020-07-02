@@ -28,6 +28,8 @@ pip install -r requirements.txt
 Refer to the following link for downloading your driver (Chrome is used in the script) - 
 [Selenium documentation](https://selenium-python.readthedocs.io/installation.html)
 
+Please change the class object's parameter to your liking. It's set as 'month' by default but you could change to '3 weeks', 'year', etc. 
+
 
 ### **Installing**
 
