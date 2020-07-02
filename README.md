@@ -11,7 +11,7 @@ I encountered a situation where I couldn't send no more invitations to connect b
 
 ### **Prerequisites**
 
-You need to have your Python 3.0~ and pip installed on your computer.\
+You need to have your Python 3.0~ and pip installed on your computer.
 
 And install all the necessary libraries by typing the following:
 ```
