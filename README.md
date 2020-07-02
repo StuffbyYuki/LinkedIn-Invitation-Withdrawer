@@ -13,14 +13,25 @@ I encountered a situation where I couldn't send no more invitations to connect b
 
 You need to have your Python 3.0~ and pip installed on your computer.
 
+
 And install all the necessary libraries by typing the following:
+
+
 ```
 pip install -r requirements.txt
 ```
 
+
+**You'll need to add your config.py file that contains your LinkedIn password, username, and path to your driver, or you can directly enter them in the script.**
+
+
+Refer to the following link for downloading your driver (Chrome is used in the script) - 
+[Selenium documentation](https://selenium-python.readthedocs.io/installation.html)
+
+
 ### **Installing**
 
-When everything is set up, then run the following to execute the script:
+When everything is set up, run the following to execute the script:
 
 ```
 python invitation_withdrawer.py
@@ -29,9 +40,8 @@ python invitation_withdrawer.py
 
 ## **Author**
 
-* **Yuki Kakegawa** - [Yuki's Github Account](https://github.com/stuffbyyuki)
+* **Yuki Kakegawa** - [Github](https://github.com/stuffbyyuki), [LinkedIn](https://linkedin.com/in/yukikakegawa)
 
-<!-- See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project. -->
 
 ## **License**
 
