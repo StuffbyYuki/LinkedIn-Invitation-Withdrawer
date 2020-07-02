@@ -3,3 +3,4 @@ env
 config.py
 *.log
 .vscode
+lkdin_follower.py
