@@ -5,7 +5,7 @@ This simple Python script can solve that problem by automatically going through 
 
 ## **Inspiration**
 
-I encountered a situation where I couldn't send no more invitations to connect because I had a lot of pending invitations that I had sent that hadn't been accepted. And I found myself manually going through the list one by one, and I though I have my script do it for me.
+I encountered a situation where I couldn't send no more invitations to connect because I had a lot of pending invitations that I had sent that hadn't been accepted. And I found myself manually going through the list one by one, and I thought I would have my script do it for me.
 
 ## **Getting Started**
 
