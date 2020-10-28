@@ -4,25 +4,30 @@
 • Your Message box on linkedin should be minimized when executing this code. When it's expanded, the code may or may not fail.
 • You need your config file that contains your username, password, and path to your driver or any other way that works best for you.
 • Please adjust time.sleep() value depending on your computer/browser condition/power.
-• Might want to implement a func that sends an email telling the script finished executing (useful when executing on a long list).
 • When the structure of the website changes, this script might not be able to do the job (I'll try to check and update the code occasionally).
 
 - Summary of what this code does -
-1. This code will login to your account and go to invitation "Sent" page. 
-2. And then go through list of people with your specified length of when you sent an invitation to them (ex.'1 week', 'month', 'year'). 
-3. The code will tell you the number of invitations you withdrew on each page.
+• This code will login to your account and go to invitation "Sent" page. 
+• And then go through the list of people with your specified length (period) of how long you're waiting on an invitation (ex.'1 week', 'month', 'year'). 
+• You can add an argument when you run the script in command line -> python my_script.py "2 weeks".
+• Or you can change the value inside the script (default is set to "3 months").
+• The code will tell you the number of invitations you withdrew on each page.
+
+- Future development -
+• Refer "TODO"s.
 
 @Author: Yuki Kakegawa 
 @Github: StuffbyYuki
 """
 
+import sys
 import time
 from selenium import webdriver
 from config import EMAIL, PASS, PATH_TO_CHROMEDRIVER
 import mybrowser
 
 class MyWithdrawer(mybrowser.MyBrowser):
-    def __init__(self, driver, url, period):
+    def __init__(self, driver, url, period='month'):
         super().__init__(driver, url)
         self.period = self.clean_astring(period)
 
@@ -55,11 +60,13 @@ class MyWithdrawer(mybrowser.MyBrowser):
 def main():
     # Set up your driver
     url = 'https://www.linkedin.com/'#'https://www.linkedin.com/mynetwork/invitation-manager/sent/'
-    driver = webdriver.Chrome(
-        PATH_TO_CHROMEDRIVER)  # Specify your chosen driver here. (i.g. firefox, safari, and chrome)
-    myWithdrawer = MyWithdrawer(driver, url,
-                                '1 week')  # By default, the code will withdraw invitations with more than a month wait.
+    driver = webdriver.Chrome(PATH_TO_CHROMEDRIVER)  # Specify your chosen driver here. (i.g. firefox, safari, and chrome)
+    if len(sys.argv) == 2:
+        myWithdrawer = MyWithdrawer(driver, url, sys.argv[1])  # By default, the code will withdraw invitations with more than a month wait.
+    else:
+        myWithdrawer = MyWithdrawer(driver, url)
     time.sleep(5)
+    print(f'\nYour specified length of wait: {myWithdrawer.period}\n')
 
     # TODO: Handle when "This page isn't working"
 
@@ -101,10 +108,15 @@ def main():
     # Go to the last page first
     time.sleep(5)
     next_button_class_name = "artdeco-pagination__button.artdeco-pagination__button--next.artdeco-button.artdeco-button--muted.artdeco-button--icon-right.artdeco-button--1.artdeco-button--tertiary.ember-view"
-    next_button = driver.find_element_by_class_name(next_button_class_name)
-    while next_button.is_enabled():
-        print('\nGo to the next page!\n')
-        myWithdrawer.click_button(next_button_class_name, find_element_by='class_name')
+    try:  # Check if next button. When there is no next button available, that means all invites are in one page.
+        next_button = driver.find_element_by_class_name(next_button_class_name)
+        while next_button.is_enabled():
+            print('\nGo to the next page!\n')
+            myWithdrawer.click_button(next_button_class_name, find_element_by='class_name')
+    except:
+        # Next button is NOT available
+        pass
+
 
     # And then go through the list of invitations as we come back to the first page.
     while True:
@@ -115,14 +127,18 @@ def main():
         myWithdrawer.withdraw_invitation(withdraw_class_name, withdraw2_class_name)
         time.sleep(3)
         prev_button_class_name = 'artdeco-pagination__button.artdeco-pagination__button--previous.artdeco-button.artdeco-button--muted.artdeco-button--1.artdeco-button--tertiary.ember-view'
-        prev_button = driver.find_element_by_class_name(prev_button_class_name)
-        if not prev_button.is_enabled():
+        try:  # Check if there is prev button
+            prev_button = driver.find_element_by_class_name(prev_button_class_name)
+            if not prev_button.is_enabled():
+                break
+            print("\nGo to the prev page!\n")
+            myWithdrawer.click_button(prev_button_class_name, find_element_by='class_name')
+        except:
+            # Prev button is NOT available
             break
-        print("\nGo to the prev page!\n")
-        myWithdrawer.click_button(prev_button_class_name, find_element_by='class_name')
     print("\nLoop ended!\n")
 
-    # Might want to implement a func that sends an email telling the script finished executing. (useful when executing on a long list)
+    # TODO: Might want to implement a func that sends an email telling the script finished executing. (useful when executing on a long list)
 
     # Quit the session
     print('\nQuitting the session!\n')
