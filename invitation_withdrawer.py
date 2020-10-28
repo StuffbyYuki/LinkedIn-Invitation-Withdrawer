@@ -66,8 +66,7 @@ def main():
     else:
         myWithdrawer = MyWithdrawer(driver, url)
     time.sleep(5)
-    print(sys.argv)
-    print(f'\n{myWithdrawer.period}\n')
+    print(f'\nYour specified length of wait: {myWithdrawer.period}\n')
 
     # TODO: Handle when "This page isn't working"
 
@@ -115,6 +114,7 @@ def main():
         myWithdrawer.click_button(next_button_class_name, find_element_by='class_name')
 
     # And then go through the list of invitations as we come back to the first page.
+    # TODO: Fix it so that when there is no next/prev button, there won't be an error.
     while True:
         print('\nLoop for withdrawing started!\n')
         # Call and keep variables for the withdrawfunction here.

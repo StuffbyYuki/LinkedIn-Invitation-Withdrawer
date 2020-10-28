@@ -46,7 +46,7 @@ When everything is set up, run the following to execute the script:
 python invitation_withdrawer.py
 ```
 
-Or you add an argument for specifying how long you've been waiting on the invitations. The script will delete the invitations wih the specified length of wait.
+Or you add an argument for specifying how long you've been waiting on the invitations. The script will delete the invitations of the specified length of wait.
 
 ```
 python invitation_withdrawer.py '2 weeks'
