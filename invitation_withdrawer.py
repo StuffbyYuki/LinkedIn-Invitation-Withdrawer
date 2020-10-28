@@ -108,13 +108,17 @@ def main():
     # Go to the last page first
     time.sleep(5)
     next_button_class_name = "artdeco-pagination__button.artdeco-pagination__button--next.artdeco-button.artdeco-button--muted.artdeco-button--icon-right.artdeco-button--1.artdeco-button--tertiary.ember-view"
-    next_button = driver.find_element_by_class_name(next_button_class_name)
-    while next_button.is_enabled():
-        print('\nGo to the next page!\n')
-        myWithdrawer.click_button(next_button_class_name, find_element_by='class_name')
+    try:  # Check if next button. When there is no next button available, that means all invites are in one page.
+        next_button = driver.find_element_by_class_name(next_button_class_name)
+        while next_button.is_enabled():
+            print('\nGo to the next page!\n')
+            myWithdrawer.click_button(next_button_class_name, find_element_by='class_name')
+    except:
+        # Next button is NOT available
+        pass
+
 
     # And then go through the list of invitations as we come back to the first page.
-    # TODO: Fix it so that when there is no next/prev button, there won't be an error.
     while True:
         print('\nLoop for withdrawing started!\n')
         # Call and keep variables for the withdrawfunction here.
@@ -123,11 +127,15 @@ def main():
         myWithdrawer.withdraw_invitation(withdraw_class_name, withdraw2_class_name)
         time.sleep(3)
         prev_button_class_name = 'artdeco-pagination__button.artdeco-pagination__button--previous.artdeco-button.artdeco-button--muted.artdeco-button--1.artdeco-button--tertiary.ember-view'
-        prev_button = driver.find_element_by_class_name(prev_button_class_name)
-        if not prev_button.is_enabled():
+        try:  # Check if there is prev button
+            prev_button = driver.find_element_by_class_name(prev_button_class_name)
+            if not prev_button.is_enabled():
+                break
+            print("\nGo to the prev page!\n")
+            myWithdrawer.click_button(prev_button_class_name, find_element_by='class_name')
+        except:
+            # Prev button is NOT available
             break
-        print("\nGo to the prev page!\n")
-        myWithdrawer.click_button(prev_button_class_name, find_element_by='class_name')
     print("\nLoop ended!\n")
 
     # TODO: Might want to implement a func that sends an email telling the script finished executing. (useful when executing on a long list)
