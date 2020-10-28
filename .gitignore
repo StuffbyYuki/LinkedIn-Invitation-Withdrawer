@@ -3,4 +3,5 @@ env
 config.py
 *.log
 .vscode
+.idea
 lkdin_follower.py
