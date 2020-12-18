@@ -1,3 +1,4 @@
+# -*- coding: UTF-8 -*-
 """
 - Things to note -
 • The code is working as of 10/27/2020.
@@ -23,6 +24,7 @@
 import sys
 import time
 from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 from config import EMAIL, PASS, PATH_TO_CHROMEDRIVER
 import mybrowser
 
@@ -59,7 +61,9 @@ class MyWithdrawer(mybrowser.MyBrowser):
 
 def main():
     # Set up your driver
-    url = 'https://www.linkedin.com/'#'https://www.linkedin.com/mynetwork/invitation-manager/sent/'
+    url = 'https://www.linkedin.com/login'#'https://www.linkedin.com/mynetwork/invitation-manager/sent/'
+    # chrome_options = Options()
+    # chrome_options.set_headless()
     driver = webdriver.Chrome(PATH_TO_CHROMEDRIVER)  # Specify your chosen driver here. (i.g. firefox, safari, and chrome)
     if len(sys.argv) == 2:
         myWithdrawer = MyWithdrawer(driver, url, sys.argv[1])  # By default, the code will withdraw invitations with more than a month wait.
@@ -71,8 +75,8 @@ def main():
     # TODO: Handle when "This page isn't working"
 
     # Go to the login page
-    myWithdrawer.click_button('nav__button-secondary', find_element_by='class_name')
-    print('\nGo to the login page!\n')
+    # myWithdrawer.click_button('nav__button-secondary', find_element_by='class_name')
+    # print('\nGo to the login page!\n')
 
     # Enter username(email) and password
     myWithdrawer.find_textbox_and_fill('session_key', EMAIL, find_element_by='name')
