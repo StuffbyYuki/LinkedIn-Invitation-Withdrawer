@@ -1,7 +1,8 @@
 # -*- coding: UTF-8 -*-
 """
 - Things to note -
-• The code is working as of 10/27/2020.
+• The code is working as of 10/31/2021.
+• Make sure your selenium driver is up-to-date or compatible with your browser version.
 • Your Message box on linkedin should be minimized when executing this code. When it's expanded, the code may or may not fail.
 • You need your config file that contains your username, password, and path to your driver or any other way that works best for you.
 • Please adjust time.sleep() value depending on your computer/browser condition/power.
@@ -92,7 +93,8 @@ def main():
     # Go to the network page
     time.sleep(3)
     # myWithdrawer.click_button('My Network', find_element_by='text')
-    sent_page = driver.find_element_by_xpath('/html/body/div[7]/header/div[2]/nav/ul/li[2]/a/span')
+    # sent_page = driver.find_element_by_xpath('/html/body/div[7]/header/div[2]/nav/ul/li[2]/a/span')
+    sent_page = driver.find_element_by_xpath('//*[@id="global-nav"]/div/nav/ul/li[2]')
     sent_page.click()
     print('\nGo to the networks page!\n')
 
