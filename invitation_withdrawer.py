@@ -1,8 +1,7 @@
 # -*- coding: UTF-8 -*-
 """
 - Things to note -
-• The code is working as of 10/31/2021.
-• Make sure your selenium driver is up-to-date or compatible with your browser version.
+• Make sure your selenium driver is up-to-date or compatible with your browser version (driver installation: https://selenium-python.readthedocs.io/installation.html).
 • Your Message box on linkedin should be minimized when executing this code. When it's expanded, the code may or may not fail.
 • You need your config file that contains your username, password, and path to your driver or any other way that works best for you.
 • Please adjust time.sleep() value depending on your computer/browser condition/power.
@@ -45,12 +44,11 @@ class MyWithdrawer(mybrowser.MyBrowser):
                 withdraw_button = alist.find_element_by_class_name(
                     withdraw_class_name)  # Need to add onto alist variable instead of using "click_button()" function
                 withdraw_button.click()
-                print(f'\n{withdrawn_count + 1}. Withdraw button clicked!\n')
                 time.sleep(3)
                 # second layer
                 self.click_button(withdraw2_class_name, find_element_by='class_name')
-                print('\nWithdrew an invitation!\n')
                 withdrawn_count += 1
+                print(f'{withdrawn_count}')
                 time.sleep(3)
         print('\nFinished going through invitation list on current page!\n')
         print(f'\nYou withdrew {withdrawn_count} invitations on this page!\n')
@@ -63,9 +61,9 @@ class MyWithdrawer(mybrowser.MyBrowser):
 def main():
     # Set up your driver
     url = 'https://www.linkedin.com/login'#'https://www.linkedin.com/mynetwork/invitation-manager/sent/'
-    # chrome_options = Options()
-    # chrome_options.set_headless()
-    driver = webdriver.Chrome(PATH_TO_CHROMEDRIVER)  # Specify your chosen driver here. (i.g. firefox, safari, and chrome)
+    chrome_options = Options()  
+    chrome_options.add_argument('--headless')  
+    driver = webdriver.Chrome(PATH_TO_CHROMEDRIVER, options=chrome_options)  # Specify your chosen driver here. (i.g. firefox, safari, and chrome)
     if len(sys.argv) == 2:
         myWithdrawer = MyWithdrawer(driver, url, sys.argv[1])  # By default, the code will withdraw invitations with more than a month wait.
     else:
@@ -73,9 +71,7 @@ def main():
     time.sleep(5)
     print(f'\nYour specified length of wait: {myWithdrawer.period}\n')
 
-    # TODO: Handle when "This page isn't working"
-
-    # Go to the login page
+    # Go to the login page  ##### this part was needed previously, but not anymore #####
     # myWithdrawer.click_button('nav__button-secondary', find_element_by='class_name')
     # print('\nGo to the login page!\n')
 
@@ -123,10 +119,10 @@ def main():
         # Next button is NOT available
         pass
 
-
     # And then go through the list of invitations as we come back to the first page.
     while True:
         print('\nLoop for withdrawing started!\n')
+        print('\nWithdraw count:\n')
         # Call and keep variables for the withdrawfunction here.
         withdraw_class_name = 'invitation-card__action-btn.artdeco-button.artdeco-button--muted.artdeco-button--3.artdeco-button--tertiary.ember-view'
         withdraw2_class_name = 'artdeco-modal__confirm-dialog-btn.artdeco-button.artdeco-button--2.artdeco-button--primary.ember-view'

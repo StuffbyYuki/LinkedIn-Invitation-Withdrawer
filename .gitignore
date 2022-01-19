@@ -1,7 +1,6 @@
 env
-*.pyc
 config.py
 *.log
-.vscode
-.idea
+.*
+__*
 lkdin_follower.py
